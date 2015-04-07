@@ -35,7 +35,7 @@ gulp.task('build-scripts', function() {
 
 // watch scripts & build with debug features
 gulp.task('watch-scripts', function() {
-	
+
 	var b = browserify(_.defaults({
 			standalone: 'App',
 			debug: true
@@ -47,7 +47,7 @@ gulp.task('watch-scripts', function() {
 	var w = watchify(b)
 		.on('update', function (scriptIds) {
 			scriptIds = scriptIds
-				.filter(function(i) { return i.substr(0,2) !== './'; });
+				.filter(function(i) { return i.substr(0,2) !== './'; })
 				.map(function(i) { return chalk.blue(i.replace(__dirname, '')); });
 			if (scriptIds.length > 1) {
 				gutil.log(scriptIds.length + ' Scripts updated:\n* ' + scriptIds.join('\n* ') + '\nrebuilding...');
@@ -66,7 +66,6 @@ gulp.task('watch-scripts', function() {
 				gutil.log('Browserify Error', e);
 			})
 			.pipe(source('app.js'))
-			.pipe(streamify(uglify()))
 			.pipe(gulp.dest('./public/build/js'));
 	}
 	
